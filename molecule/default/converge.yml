@@ -42,5 +42,5 @@
     openvpn_management_enable: false
     openvpn_client_to_client_via_ip: false
   roles:
-    - role: nkakouros.easyrsa
-    - role: Stouts.openvpn
+    - role: tepseg-ansible-easyrsa
+    - role: tepseg-ansible-openvpn
