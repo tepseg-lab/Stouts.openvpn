@@ -17,7 +17,7 @@
   command: >-
     sed -n
     '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p'
-    {{ openvpn_keydir }}/issued/{{ _openvpn__client }}.crt
+    {{ openvpn_keydir }}/issued/client.crt
 #  args:
 #    warn: false
   no_log: false
