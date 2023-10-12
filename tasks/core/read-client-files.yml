@@ -20,7 +20,7 @@
     {{ openvpn_keydir }}/issued/{{ _openvpn__client }}.crt
   args:
     warn: false
-  no_log: true
+  no_log: false
   changed_when: false
   register: openvpn_read_client_cert_files_results
   loop: "{{ openvpn_clients }}"
