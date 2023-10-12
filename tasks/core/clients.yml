@@ -3,7 +3,7 @@
 - name: Generate client configurations
   template:
     src: "{{ openvpn_client_conf_template }}"
-    dest: "{{ openvpn_etcdir }}/ovpns/{{ _openvpn__client }}.ovpn"
+    dest: "{{ openvpn_etcdir }}/ovpns/client.ovpn"
     mode: 0o644
   loop: "{{ openvpn_clients }}"
   loop_control:
@@ -13,10 +13,10 @@
 - name: Pack clients
   command: >-
     zip -j
-      {{ _openvpn__client }}.zip
-      {{ openvpn_keydir }}/issued/{{ _openvpn__client }}.crt
-      {{ openvpn_keydir }}/private/{{ _openvpn__client }}.key
-      {{ _openvpn__client }}.ovpn
+      client.zip
+      {{ openvpn_keydir }}/issued/client.crt
+      {{ openvpn_keydir }}/private/client.key
+      client.ovpn
       {{ openvpn_keydir }}/ca.crt
       {{ openvpn_tls_key if openvpn_tls_auth else '' }}
   loop: "{{ openvpn_clients }}"
@@ -29,7 +29,7 @@
 
 - name: Download client credentials
   fetch:
-    src: "{{ openvpn_etcdir }}/ovpns/{{ _openvpn__client }}.zip"
+    src: "{{ openvpn_etcdir }}/ovpns/client.zip"
     dest: "{{ openvpn_download_dir }}"
     flat: true
     validate_checksum: true
@@ -42,7 +42,7 @@
 
 - name: Extract client credentials
   unarchive:
-    src: "{{ openvpn_download_dir }}/{{ _openvpn__client }}.zip"
+    src: "{{ openvpn_download_dir }}/client.zip"
     dest: "{{ openvpn_download_dir }}"
   loop: "{{ openvpn_clients }}"
   loop_control:
