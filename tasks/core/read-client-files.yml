@@ -1,7 +1,7 @@
 ---
 - name: Read CA file
   command: cat "{{ openvpn_keydir }}/ca.crt"
-  no_log: true
+  no_log: false
   register: openvpn_read_ca_file_results
   changed_when: false
 
@@ -17,10 +17,9 @@
   command: >-
     sed -n
     '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p'
-    {{ openvpn_keydir }}/issued/client.crt
-# {{ openvpn_keydir }}/issued/{{ _openvpn__client }}.crt
-#  args:
-#    warn: false
+    {{ openvpn_keydir }}/issued/{{ _openvpn__client }}.crt
+  args:
+    warn: false
   no_log: false
   changed_when: false
   register: openvpn_read_client_cert_files_results
@@ -29,8 +28,8 @@
     loop_var: _openvpn__client
 
 - name: Read client key files
-  command: cat {{ openvpn_keydir }}/private/client.key #cat {{ openvpn_keydir }}/private/{{ _openvpn__client }}.key
-  no_log: false
+  command: cat {{ openvpn_keydir }}/private/{{ _openvpn__client }}.key
+  no_log: true
   changed_when: false
   register: openvpn_read_client_key_files_results
   loop: "{{ openvpn_clients }}"
